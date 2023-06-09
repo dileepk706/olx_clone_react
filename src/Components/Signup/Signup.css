@@ -23,6 +23,7 @@
     background-color: #002f34;
     color: whitesmoke;
     font-weight: 900;
+    cursor: pointer;
   }
   .signupParentDiv button:hover {
     background-color: white;

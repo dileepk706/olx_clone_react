@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import './Header.css';
 import OlxLogo from '../../assets/OlxLogo';
@@ -6,7 +6,22 @@ import Search from '../../assets/Search';
 import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
+import { AuthContext } from '../../store/firebaseContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { firebaseContext } from '../../store/firebaseContext';
+import { signOut } from 'firebase/auth';
 function Header() {
+  const {user}=useContext(AuthContext)
+  let navigate=useNavigate()
+  const firebase=useContext(firebaseContext)
+
+  const signoutHelper = async () => {
+    await signOut(firebase)
+  }
+  const loginPage=()=>{
+    navigate('/login')
+  }
+
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
@@ -34,7 +49,12 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <span>Login</span>
+          {user?( 
+          <span style={{cursor:'pointer'}} onClick={signoutHelper}>Logout</span>
+          ):(
+          <span style={{cursor:'pointer'}} onClick={loginPage}>Login</span>
+          ) }
+         
           <hr />
         </div>
 
